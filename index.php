@@ -13,13 +13,13 @@
    
    <body>
       <?php 
-        $page1_info = [];
-				$page1_info['store_type'] = $_POST['store_type'] ?? '';
-				$page1_info['provide_details'] = $_POST['provide_details'] ?? '';
-				$page1_info['user_look_up'] = $_POST['user_look_up'] ?? '';
-				$page1_info['first_name'] = $_POST['first_name'] ?? '';
-				$page1_info['last_name'] = $_POST['last_name'] ?? '';	      	
-	      // echo print_r($page1_info);
+        $page_info = [];
+				$page_info['store_type'] = $_POST['store_type'] ?? '';
+				$page_info['provide_details'] = $_POST['provide_details'] ?? '';
+				$page_info['user_look_up'] = $_POST['user_look_up'] ?? '';
+				$page_info['first_name'] = $_POST['first_name'] ?? '';
+				$page_info['last_name'] = $_POST['last_name'] ?? '';	      	
+	      // echo print_r($page_info);
       ?>
 
 
@@ -33,36 +33,36 @@
 								<br>
 								<label>Store Type</label>
 								<select class="form-control" id="store_type" name="store_type" onchange="on_off()" required>
-								  <option value="1" <?php if($page1_info['store_type']=='1' || empty($page1_info['store_type'])){echo "selected";}?>>Mall</option>
-								  <option value="2" <?php if($page1_info['store_type']=='2'){echo "selected";}?>>Metro</option>>
-								  <option value="3" <?php if($page1_info['store_type']=='3'){echo "selected";}?>>Arcade</option>>
-								  <option value="4" <?php if($page1_info['store_type']=='4'){echo "selected";}?>>Centre</option>>
+								  <option value="1" <?php if($page_info['store_type']=='1' || empty($page_info['store_type'])){echo "selected";}?>>Mall</option>
+								  <option value="2" <?php if($page_info['store_type']=='2'){echo "selected";}?>>Metro</option>>
+								  <option value="3" <?php if($page_info['store_type']=='3'){echo "selected";}?>>Arcade</option>>
+								  <option value="4" <?php if($page_info['store_type']=='4'){echo "selected";}?>>Centre</option>>
 								</select>
 							</div>
 
 							<div class="form-group" id="provide_details" name="provide_details" style="display: none">
 								<label>Provide details</label><br>
-								<input type="text" class="form-control"  id="provide_details_input" required=""<?php if(!empty($page1_info['provide_details'])){echo "value=\"" . $page1_info['provide_details'] . "\"";}else{echo "value=\"\"";}?>>
+								<input type="text" class="form-control"  id="provide_details_input" required=""<?php if(!empty($page_info['provide_details'])){echo "value=\"" . $page_info['provide_details'] . "\"";}else{echo "value=\"\"";}?>>
 							</div>
 
 							<div class="form-group">
 								<label>User lookup</label><br>
-								<input type="text" class="form-control" id="user_look_up" name="user_look_up" onchange="auto_fill_names()" required <?php if(!empty($page1_info['user_look_up'])){echo "value=\"" . $page1_info['user_look_up'] . "\"";}?>>
+								<input type="text" class="form-control" id="user_look_up" name="user_look_up" onchange="auto_fill_names()" required <?php if(!empty($page_info['user_look_up'])){echo "value=\"" . $page_info['user_look_up'] . "\"";}?>>
 							</div>
 
 							<div class="form-group">
 							  <label>First name</label><br>
-							  <input type="text" class="form-control" id="first_name" name="first_name" disabled="" required>
+							  <input type="text" class="form-control" id="first_name" name="first_name" disabled="" required value="">
 							</div>
 
 							<div class="form-group">
 							  <label>Last name</label><br>
-							  <input type="text" class="form-control" id="last_name" name="last_name" disabled="" required>
+							  <input type="text" class="form-control" id="last_name" name="last_name" disabled="" required value="">
 							</div>
 							<div class="row">
 								<div class="col-sm-6"></div>
 								<div class="col-sm-6">
-		      				<input type="Submit" value="Next" class="btn btn-primary btn-block btn-sm">
+		      				<input type="Submit" value="Next" class="btn btn-primary btn-block btn-sm" onfocus="on_off()">
 								</div>
 							</div><!-- row -->
 						</form><!-- form -->
@@ -99,21 +99,15 @@
 				{
 					var e = document.getElementById("store_type");
 					if(e.options[e.selectedIndex].value == "2") {
+				    document.getElementById("provide_details_input"),value = "";
+				    document.getElementById("provide_details_input").attributes.required = true;
 				    document.getElementById("provide_details").style.display = "block";	
-				    document.getElementById("provide_details").attributes.required = "true";
 					}
 					else {
+				    document.getElementById("provide_details_input"),value = " ";
+				    document.getElementById("provide_details_input").attributes.required = false;
 				    document.getElementById("provide_details").style.display = "none";
-				    document.getElementById("provide_details").attributes.required = "false";
 					}
-				}
-
-				function validateForm() {
-					alert("store_type=" + document.forms["form1"]["store_type"].value + 
-								"; provide_details=" + document.forms["form1"]["provide_details"].value + 
-								"; user_look_up=" + document.forms["form1"]["user_look_up"].value + 	
-								"; first_name=" + document.forms["form1"]["first_name"].value + 
-								"; last_name=" + document.forms["form1"]["last_name"].value);	
 				}
 
 				window.onload = on_off();

@@ -13,12 +13,13 @@
    
    <body>
       <?php 
-         $page1_info = [];
-         $page1_info['store_type'] = $_POST['store_type'] ?? '';
-         $page1_info['provide_details'] = $_POST['provide_details'] ?? '';
-         $page1_info['user_look_up'] = $_POST['user_look_up'] ?? '';
-         $page1_info['first_name'] = $_POST['first_name'] ?? '';
-         $page1_info['last_name'] = $_POST['last_name'] ?? '';          
+         $page_info = [];
+         $page_info['store_type'] = $_POST['store_type'] ?? '';
+         $page_info['provide_details'] = $_POST['provide_details'] ?? '';
+         $page_info['user_look_up'] = $_POST['user_look_up'] ?? '';
+         $page_info['first_name'] = $_POST['first_name'] ?? '';
+         $page_info['last_name'] = $_POST['last_name'] ?? '';
+         // print_r($page_info);
       ?>
 
 	   <!-- HTML -->
@@ -26,23 +27,14 @@
       	<div class="row">
       		<div class="col-sm-3"></div>
       		<div class="col-sm-6">
-      			<form name="form2" action="" method="post">
-                  <?php 
-                     // echo 'store_type=' . $page1_info['store_type'] . "<br>";
-                     // echo 'provide_details=' . $page1_info['provide_details'] . "<br>";
-                     // echo 'user_look_up=' . $page1_info['user_look_up'] . "<br>";
-                     // echo 'first_name=' . $page1_info['first_name'] . "<br>";
-                     // echo 'last_name=' . $page1_info['last_name'] . "<br>";
-                     // echo print_r($_POST);
-                  ?>
-
+               <form name="form2" action="https://webhook.site/5379480c-852e-4e4f-b0c1-daa9b9511416" method="post">
                   <div class="form-group">
                      <br>
                      <label>What is the users role ?</label>
                      <select class="form-control" id="user_role" name="user_role">
-                       <option value="1" <?php if($page1_info['store_type']=='1' || empty($page1_info['store_type'])){echo "selected";}?>>Dev</option>
-                       <option value="2" <?php if($page1_info['store_type']=='2'){echo "selected";}?>>Manager</option>>
-                       <option value="3" <?php if($page1_info['store_type']=='3'){echo "selected";}?>>Student</option>>
+                       <option value="1" <?php if($page_info['store_type']=='1' || empty($page_info['store_type'])){echo "selected";}?>>Dev</option>
+                       <option value="2" <?php if($page_info['store_type']=='2'){echo "selected";}?>>Manager</option>>
+                       <option value="3" <?php if($page_info['store_type']=='3'){echo "selected";}?>>Student</option>>
                      </select>
                   </div>
 
@@ -55,14 +47,14 @@
                   <div class="form-group" id="vic_located" required >
                      <label>Is this person located in Victoria ?</label>
                      <br>
-                     <input type="radio" name="vic_located" value="yes" required>YES
-                     <input type="radio" name="vic_located" value="no">NO<br>
+                     <input type="radio" id="check_yes" name="vic_located" value="yes" required onclick="on_off()">YES
+                     <input type="radio" id="check_no" name="vic_located" value="no" onclick="on_off()">NO<br>
                   </div>
 
-                  <div class="form-group" id="vic_address" name="vic_address" required style="display: block">
+                  <div class="form-group" id="vic_address" name="vic_address" style="display: none">
                      <label>Where in Victoria ?</label>
                      <br>
-                     <input type="text" class="form-control" <?php if(!empty($page1_info['vic_address'])){echo "value=\"" . $page1_info['vic_address'] . "\"";}else{echo "value=\"\"";}?>>
+                     <input type="text" class="form-control" id="vic_address_input" required="" <?php if(!empty($page_info['vic_address'])){echo "value=\"" . $page_info['vic_address'] . "\"";}else{echo "value=\"\"";}?>>
                   </div>
 
                   <div class="row">
@@ -73,6 +65,12 @@
                         <input type="Submit" value="Next" class="btn btn-primary btn-block btn-sm">
                      </div>
                   </div><!-- row -->
+
+                  <input hidden="" id="store_type" <?php echo "value=\"" . $page_info['store_type'] . "\""?>>
+                  <input hidden="" id="provide_details" <?php echo "value=\"" . $page_info['provide_details'] . "\""?>>
+                  <input hidden="" id="user_look_up" <?php echo "value=\"" . $page_info['user_look_up'] . "\""?>>
+                  <input hidden="" id="first_name" <?php echo "value=\"" . $page_info['first_name'] . "\""?>>
+                  <input hidden="" id="last_name" <?php echo "value=\"" . $page_info['last_name'] . "\""?>>
 
 						</form><!-- form -->
 					</div><!-- col -->
@@ -91,8 +89,20 @@
             document.getElementById("vic_located").attributes.required = "";
             document.getElementById("vic_address").attributes.required = "";
             
-            window.location.href = 'http://localhost/plexus/plexus/';
+            window.location.href = 'http://localhost/plexus/plexus/index.php';
          }
+
+        function on_off()
+            {
+               if (document.getElementById("check_yes").checked) {
+                  document.getElementById("vic_address").style.display = "block"; 
+               }
+               else {
+                  document.getElementById("vic_address").style.display = "none";
+                  document.getElementById("vic_address_input").value = " ";
+               }
+            }
+
       </script>
    </body>
 </html>
