@@ -19,7 +19,7 @@
 				$page1_info['user_look_up'] = $_POST['user_look_up'] ?? '';
 				$page1_info['first_name'] = $_POST['first_name'] ?? '';
 				$page1_info['last_name'] = $_POST['last_name'] ?? '';	      	
-	      echo print_r($page1_info);
+	      // echo print_r($page1_info);
       ?>
 
 
@@ -32,8 +32,8 @@
 							<div class="form-group">
 								<br>
 								<label>Store Type</label>
-								<select class="form-control" id="store_type" name="store_type" onchange="on_off()">
-								  <option value="1" required <?php if($page1_info['store_type']=='1' || empty($page1_info['store_type'])){echo "selected";}?>>Mall</option>
+								<select class="form-control" id="store_type" name="store_type" onchange="on_off()" required>
+								  <option value="1" <?php if($page1_info['store_type']=='1' || empty($page1_info['store_type'])){echo "selected";}?>>Mall</option>
 								  <option value="2" <?php if($page1_info['store_type']=='2'){echo "selected";}?>>Metro</option>>
 								  <option value="3" <?php if($page1_info['store_type']=='3'){echo "selected";}?>>Arcade</option>>
 								  <option value="4" <?php if($page1_info['store_type']=='4'){echo "selected";}?>>Centre</option>>
@@ -42,7 +42,7 @@
 
 							<div class="form-group" id="provide_details" name="provide_details" style="display: none">
 								<label>Provide details</label><br>
-								<input type="text" class="form-control" required <?php if(!empty($page1_info['provide_details'])){echo "value=\"" . $page1_info['provide_details'] . "\"";}else{echo "value=\"\"";}?>>
+								<input type="text" class="form-control"  id="provide_details_input" required=""<?php if(!empty($page1_info['provide_details'])){echo "value=\"" . $page1_info['provide_details'] . "\"";}else{echo "value=\"\"";}?>>
 							</div>
 
 							<div class="form-group">
@@ -88,17 +88,23 @@
         function auto_fill_names(){
           var name = document.getElementById("user_look_up").value.split(" ");  
           document.getElementById("first_name").value = name[0]; 
-          document.getElementById("last_name").value = name[1]; 
+          if(name[1] == null) {
+          	document.getElementById("last_name").value = '';	
+          } else {
+	          document.getElementById("last_name").value = name[1]; 
+          }
         }
 
         function on_off()
 				{
 					var e = document.getElementById("store_type");
 					if(e.options[e.selectedIndex].value == "2") {
-				    document.getElementById("provide_details").style.display = "block";
+				    document.getElementById("provide_details").style.display = "block";	
+				    document.getElementById("provide_details").attributes.required = "true";
 					}
 					else {
 				    document.getElementById("provide_details").style.display = "none";
+				    document.getElementById("provide_details").attributes.required = "false";
 					}
 				}
 
@@ -108,11 +114,10 @@
 								"; user_look_up=" + document.forms["form1"]["user_look_up"].value + 	
 								"; first_name=" + document.forms["form1"]["first_name"].value + 
 								"; last_name=" + document.forms["form1"]["last_name"].value);	
-					
-				window.onload = on_off();
-				window.onload = auto_fill_names();
 				}
 
+				window.onload = on_off();
+				window.onload = auto_fill_names();
       </script>
    </body>
 </html>
